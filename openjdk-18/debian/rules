@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; then make dist-clean; rm -r build; fi
+
+override_dh_auto_configure:
+	bash configure \
+	--with-boot-jdk=/usr/lib/jvm/java-17-openjdk-amd64 \
+	--with-vendor-version-string=coffeelibs
+
+override_dh_auto_build:
+	make jdk-image
+
+override_dh_auto_test:
+	build/linux-x86_64-server-release/images/jdk/bin/java -version
+
+override_dh_auto_install:
+	# see coffeelibs-jdk-18.install
+
+override_dh_strip_nondeterminism:
+	# no-op

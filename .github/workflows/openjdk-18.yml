@@ -1,0 +1,51 @@
+name: Build Debian Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      dput:
+        description: 'Upload to PPA'
+        required: true
+        default: false
+        type: boolean
+
+env:
+  JDK_TARBALL_URL: https://github.com/openjdk/jdk/archive/refs/tags/jdk-18+37.tar.gz
+  PKG_NAME_AND_VERSION: openjdk-18_18+37
+
+jobs:
+  build:
+    name: Build Debian Package
+    runs-on: ubuntu-20.04 #focal
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install debhelper devscripts dput
+      - name: Download OpenJDK tarball
+        run: >
+          curl
+          -L ${{ JDK_TARBALL_URL }}
+          -o ${{ PKG_NAME_AND_VERSION }}.orig.tar.gz
+      - name: Unzip tarball
+        run: |
+          mkdir ${{ PKG_NAME_AND_VERSION }};
+          tar -xzf ${{ PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ PKG_NAME_AND_VERSION }} --strip-components 1
+      - name: Copy debian package resources
+        run: cp -R openjdk-18/debian ${{ PKG_NAME_AND_VERSION }}
+      - name: Build package
+        run: debuild -i -us -uc -b
+        working-directory: ${{ PKG_NAME_AND_VERSION }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: deb-package
+          path: |
+            openjdk-18_*.dsc
+            openjdk-18_*.debian.tar.xz
+            openjdk-18_*_source.buildinfo
+            openjdk-18_*_source.changes
+            openjdk-18_*_amd64.deb

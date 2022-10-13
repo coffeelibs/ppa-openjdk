@@ -1,0 +1,9 @@
+build/linux-x86_64-server-release/images/jdk/bin usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/conf usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/demo usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/include usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/jmods usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/legal usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/lib usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/man usr/lib/jvm/coffeelibs-openjdk-18
+build/linux-x86_64-server-release/images/jdk/release usr/lib/jvm/coffeelibs-openjdk-18
