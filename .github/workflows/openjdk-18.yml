@@ -1,4 +1,4 @@
-name: Build Debian Package
+name: Build OpenJDK-18
 
 on:
   workflow_dispatch:
