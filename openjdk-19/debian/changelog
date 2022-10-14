@@ -1,5 +1,5 @@
-openjdk-19 (19+36-0ppa1) focal; urgency=low
+openjdk-19 (19+36-0ppa2) focal; urgency=low
 
   * see https://jdk.java.net/19/release-notes
 
- -- Cryptobot <releases@cryptomator.org>  Fri, 14 Oct 2022 10:35:45 +0200
+ -- Cryptobot <releases@cryptomator.org>  Fri, 14 Oct 2022 13:18:45 +0200
