@@ -1,0 +1,34 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+BOOT_JDK_PATH = /usr/lib/jvm/java-18-coffeelibs
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; then make dist-clean; rm -r build; fi
+
+override_dh_auto_configure:
+	bash configure \
+	--with-conf-name=coffeelibs-openjdk-19 \
+	--with-boot-jdk=$(BOOT_JDK_PATH) \
+	--with-version-pre= \
+	--with-version-build=37 \
+	--with-version-opt=coffeelibs \
+	--with-native-debug-symbols=none
+
+override_dh_auto_build:
+	make jdk-image
+
+override_dh_auto_test:
+	build/coffeelibs-openjdk-19/images/jdk/bin/java -version
+
+override_dh_auto_install:
+	# see coffeelibs-jdk-19.install
+
+override_dh_strip_nondeterminism:
+	# no-op

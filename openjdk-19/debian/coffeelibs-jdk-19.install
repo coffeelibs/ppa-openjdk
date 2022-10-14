@@ -1,0 +1,9 @@
+build/coffeelibs-openjdk-19/images/jdk/bin usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/conf usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/demo usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/include usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/jmods usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/legal usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/lib usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/man usr/lib/jvm/java-19-coffeelibs
+build/coffeelibs-openjdk-19/images/jdk/release usr/lib/jvm/java-19-coffeelibs
