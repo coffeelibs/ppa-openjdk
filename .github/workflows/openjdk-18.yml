@@ -28,14 +28,14 @@ jobs:
       - name: Download OpenJDK tarball
         run: >
           curl
-          -L ${{ JDK_TARBALL_URL }}
-          -o ${{ PKG_NAME_AND_VERSION }}.orig.tar.gz
+          -L ${{ env.JDK_TARBALL_URL }}
+          -o ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz
       - name: Unzip tarball
         run: |
-          mkdir ${{ PKG_NAME_AND_VERSION }};
-          tar -xzf ${{ PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ PKG_NAME_AND_VERSION }} --strip-components 1
+          mkdir ${{ env.PKG_NAME_AND_VERSION }};
+          tar -xzf ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ env.PKG_NAME_AND_VERSION }} --strip-components 1
       - name: Copy debian package resources
-        run: cp -R openjdk-18/debian ${{ PKG_NAME_AND_VERSION }}
+        run: cp -R openjdk-18/debian ${{ env.PKG_NAME_AND_VERSION }}
       - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
         run: |
           echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
@@ -45,7 +45,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
       - name: Build package
         run: debuild -S -sa -d
-        working-directory: ${{ PKG_NAME_AND_VERSION }}
+        working-directory: ${{ env.PKG_NAME_AND_VERSION }}
         env:
           DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
           DEBSIGN_KEYID: 615D449FE6E6A235
