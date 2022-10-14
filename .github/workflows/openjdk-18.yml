@@ -36,9 +36,19 @@ jobs:
           tar -xzf ${{ PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ PKG_NAME_AND_VERSION }} --strip-components 1
       - name: Copy debian package resources
         run: cp -R openjdk-18/debian ${{ PKG_NAME_AND_VERSION }}
+      - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
+        run: |
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
       - name: Build package
-        run: debuild -i -us -uc -b
+        run: debuild -S -sa -d
         working-directory: ${{ PKG_NAME_AND_VERSION }}
+        env:
+          DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
+          DEBSIGN_KEYID: 615D449FE6E6A235
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -48,4 +58,6 @@ jobs:
             openjdk-18_*.debian.tar.xz
             openjdk-18_*_source.buildinfo
             openjdk-18_*_source.changes
-            openjdk-18_*_amd64.deb
+      - name: Publish on PPA
+        if: inputs.dput
+        run: dput ppa:coffeelibs/openjdk openjdk-18_*_source.changes
