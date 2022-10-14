@@ -2,8 +2,8 @@ Source: openjdk-18
 Maintainer: Cryptobot <releases@cryptomator.org>
 Section: contrib/java
 Priority: optional
-Build-Depends: debhelper (>=10), openjdk-17-jdk-headless, build-essential, file, unzip, zip, autoconf, libx11-dev, libxext-dev, libxrender-dev, libxrandr-dev, libxtst-dev, libxt-dev, libcups2-dev, libfontconfig1-dev, libasound2-dev
-Standards-Version: 4.5.1
+Build-Depends: debhelper (>=10), openjdk-17-jdk-headless, make, gcc, g++, libc6-dev, file, unzip, zip, autoconf, libx11-dev, libxext-dev, libxrender-dev, libxrandr-dev, libxtst-dev, libxt-dev, libcups2-dev, libfontconfig1-dev, libasound2-dev
+Standards-Version: 4.5.0
 
 Package: coffeelibs-jdk-18
 Architecture: amd64 arm64
