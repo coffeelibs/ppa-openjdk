@@ -13,7 +13,8 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	bash configure \
 	--with-boot-jdk=/usr/lib/jvm/java-17-openjdk-amd64 \
-	--with-vendor-version-string=coffeelibs
+	--with-vendor-version-string=coffeelibs \
+	--with-native-debug-symbols=none
 
 override_dh_auto_build:
 	make jdk-image

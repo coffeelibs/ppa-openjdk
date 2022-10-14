@@ -7,8 +7,8 @@ Standards-Version: 4.5.1
 
 Package: coffeelibs-jdk-18
 Architecture: amd64 arm64
-Multi-Arch: same
-Depends: ${misc:Depends}
+Multi-Arch: no
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: java-runtime-headless, java-sdk-headless, java-compiler
 Breaks: openjdk-18-jdk-headless
 Replaces: openjdk-18-jdk-headless
