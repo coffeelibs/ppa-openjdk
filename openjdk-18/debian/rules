@@ -4,6 +4,13 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+ifeq ($(DEB_BUILD_ARCH),amd64)
+BOOT_JDK_PATH = /usr/lib/jvm/java-17-openjdk-amd64
+else ifeq ($(DEB_BUILD_ARCH),arm64)
+BOOT_JDK_PATH = /usr/lib/jvm/java-17-openjdk-arm64
+endif
+
 %:
 	dh $@
 
@@ -13,7 +20,7 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	bash configure \
 	--with-conf-name=coffeelibs-openjdk-18 \
-	--with-boot-jdk=/usr/lib/jvm/java-17-openjdk-amd64 \
+	--with-boot-jdk=$(BOOT_JDK_PATH) \
 	--with-version-pre= \
 	--with-version-build=37 \
 	--with-version-opt=coffeelibs \
