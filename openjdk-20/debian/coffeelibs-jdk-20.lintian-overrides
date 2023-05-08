@@ -1,0 +1,5 @@
+# libjawt.so and librmi.so
+coffeelibs-jdk-20 binary: library-not-linked-against-libc
+
+# libjavajpeg.so, liblcms.so, libsplashscreen.so
+coffeelibs-jdk-20 binary: embedded-library

@@ -1,0 +1,63 @@
+name: Build OpenJDK-20
+
+on:
+  workflow_dispatch:
+    inputs:
+      dput:
+        description: 'Upload to PPA'
+        required: true
+        default: false
+        type: boolean
+
+env:
+  JDK_TARBALL_URL: https://github.com/openjdk/jdk/archive/refs/tags/jdk-20+36.tar.gz
+  PKG_NAME_AND_VERSION: openjdk-20_20+36
+
+jobs:
+  build:
+    name: Build Debian Package
+    runs-on: ubuntu-20.04 #focal
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install debhelper devscripts dput
+      - name: Download OpenJDK tarball
+        run: >
+          curl
+          -L ${{ env.JDK_TARBALL_URL }}
+          -o ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz
+      - name: Unzip tarball
+        run: |
+          mkdir ${{ env.PKG_NAME_AND_VERSION }};
+          tar -xzf ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ env.PKG_NAME_AND_VERSION }} --strip-components 1
+      - name: Copy debian package resources
+        run: cp -R openjdk-20/debian ${{ env.PKG_NAME_AND_VERSION }}
+      - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
+        run: |
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
+      - name: Build package
+        run: debuild -S -sa -d
+        working-directory: ${{ env.PKG_NAME_AND_VERSION }}
+        env:
+          DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
+          DEBSIGN_KEYID: 615D449FE6E6A235
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: deb-package
+          path: |
+            openjdk-20_*.dsc
+            openjdk-20_*.debian.tar.xz
+            openjdk-20_*_source.buildinfo
+            openjdk-20_*_source.changes
+      - name: Publish on PPA
+        if: inputs.dput
+        run: dput ppa:coffeelibs/openjdk openjdk-20_*_source.changes
