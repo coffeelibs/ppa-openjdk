@@ -1,0 +1,5 @@
+openjdk-21 (21+35-0ppa1) focal; urgency=low
+
+  * see https://jdk.java.net/21/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Mon, 18 Sep 2023 15:23:45 +0200
