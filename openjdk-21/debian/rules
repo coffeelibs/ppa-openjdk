@@ -5,7 +5,7 @@
 #export DH_VERBOSE=1
 
 BOOT_JDK_PATH = /usr/lib/jvm/java-20-coffeelibs
-JDK_BUILD_NO = 35
+JDK_VERSION = 21.0.1+12-1
 
 %:
 	dh $@
@@ -18,7 +18,7 @@ override_dh_auto_configure:
 	--with-conf-name=coffeelibs-openjdk-21 \
 	--with-boot-jdk=$(BOOT_JDK_PATH) \
 	--with-version-pre= \
-	--with-version-build=$(JDK_BUILD_NO) \
+	--with-version-string=$(JDK_VERSION) \
 	--with-version-opt=coffeelibs \
 	--with-native-debug-symbols=none
 

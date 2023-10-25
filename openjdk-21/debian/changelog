@@ -1,3 +1,12 @@
+openjdk-21 (21.0.1+12-1) unstable; urgency=high
+
+  * OpenJDK 21.0.1 release, build 12.
+    - CVE-2023-22081, CVE-2023-22025.
+    - Release notes:
+      https://www.oracle.com/java/technologies/javase/21-0-1-relnotes.html
+
+ -- Cryptobot <releases@cryptomator.org>  Wed, 25 Oct 2023 12:50:00 +0200
+
 openjdk-21 (21+35-0ppa2) focal; urgency=low
 
   * see https://jdk.java.net/21/release-notes
