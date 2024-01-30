@@ -10,8 +10,8 @@ on:
         type: boolean
 
 env:
-  JDK_TARBALL_URL: https://github.com/openjdk/jdk21u/archive/refs/tags/jdk-21.0.1+12.tar.gz
-  PKG_NAME_AND_VERSION: openjdk-21_21.0.1+12
+  JDK_TARBALL_URL: https://github.com/openjdk/jdk21u/archive/refs/tags/jdk-21.0.2+13.tar.gz
+  PKG_NAME_AND_VERSION: openjdk-21_21.0.2+13
 
 jobs:
   build:

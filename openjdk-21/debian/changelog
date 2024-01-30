@@ -1,3 +1,10 @@
+openjdk-21 (21.0.2+13-0ppa1) focal; urgency=high
+
+  * OpenJDK 21.0.2 release, build 13.
+  * see https://jdk.java.net/21/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Tue, 30 Jan 2024 11:00:00 +0200
+
 openjdk-21 (21.0.1+12-0ppa1) focal; urgency=high
 
   * OpenJDK 21.0.1 release, build 12.
