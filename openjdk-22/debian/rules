@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+BOOT_JDK_PATH = /usr/lib/jvm/java-21-coffeelibs
+JDK_VERSION = 22.0.0+36
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	if [ -d build ]; then make dist-clean; rm -r build; fi
+
+override_dh_auto_configure:
+	bash configure \
+	--with-conf-name=coffeelibs-openjdk-22 \
+	--with-boot-jdk=$(BOOT_JDK_PATH) \
+	--with-version-pre= \
+	--with-version-string=$(JDK_VERSION) \
+	--with-version-opt=coffeelibs \
+	--with-native-debug-symbols=none
+
+override_dh_auto_build:
+	make jdk-image
+
+override_dh_auto_test:
+	build/coffeelibs-openjdk-22/images/jdk/bin/java -version
+
+override_dh_auto_install:
+	# see coffeelibs-jdk-22.install
+
+override_dh_strip_nondeterminism:
+	# no-op
