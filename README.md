@@ -18,3 +18,6 @@ Let's say you want to use JDK 19 on Ubuntu Focal:
 3. use it, e.g. by running `${JAVA_HOME}/bin/jlink`
 
 \* Please note, that this package does not set up any paths or symlinks itself.
+
+## Building
+To locally build a JDK, use `build.sh`.
