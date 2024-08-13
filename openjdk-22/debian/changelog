@@ -1,3 +1,9 @@
+openjdk-22 (22.0.2+9-0ppa1) focal; urgency=low
+
+  * see https://jdk.java.net/22/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Tue, 13 Aug 2024 18:10:30 +0200
+
 openjdk-22 (22.0.1+8-0ppa1) focal; urgency=low
 
   * see https://jdk.java.net/22/release-notes
