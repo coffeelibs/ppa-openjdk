@@ -46,7 +46,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
       - name: Build package
         run: |
-          (sleep 5m; gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md) &
+          (sleep 8m; gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md) &
           debuild -S -sa -d
         working-directory: ${{ env.PKG_NAME_AND_VERSION }}
         env:
