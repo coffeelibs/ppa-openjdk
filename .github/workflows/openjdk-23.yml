@@ -45,7 +45,9 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
       - name: Build package
-        run: debuild -S -sa -d
+        run: |
+          (sleep 5m; gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md) &
+          debuild -S -sa -d
         working-directory: ${{ env.PKG_NAME_AND_VERSION }}
         env:
           DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
