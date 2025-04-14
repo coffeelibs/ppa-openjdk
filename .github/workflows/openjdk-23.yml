@@ -11,8 +11,8 @@ on:
 
 env:
   JDK_MAJOR_VERSION: 23
-  JDK_TARBALL_URL: https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.1+11.tar.gz
-  PKG_NAME_AND_VERSION: openjdk-23_23.0.1+11
+  JDK_TARBALL_URL: https://github.com/openjdk/jdk23u/archive/refs/tags/jdk-23.0.2+7.tar.gz
+  PKG_NAME_AND_VERSION: openjdk-23_23.0.2+7
 
 jobs:
   build:
