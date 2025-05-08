@@ -2,7 +2,6 @@ build/coffeelibs-openjdk-24/images/jdk/bin usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/conf usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/demo usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/include usr/lib/jvm/java-24-coffeelibs
-build/coffeelibs-openjdk-24/images/jdk/jmods usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/legal usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/lib usr/lib/jvm/java-24-coffeelibs
 build/coffeelibs-openjdk-24/images/jdk/man usr/lib/jvm/java-24-coffeelibs
