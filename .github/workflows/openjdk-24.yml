@@ -1,0 +1,66 @@
+name: Build OpenJDK-24
+
+on:
+  workflow_dispatch:
+    inputs:
+      dput:
+        description: 'Upload to PPA'
+        required: true
+        default: false
+        type: boolean
+
+env:
+  JDK_MAJOR_VERSION: 24
+  JDK_TARBALL_URL: https://github.com/openjdk/jdk24u/archive/refs/tags/jdk-24.0.1+9.tar.gz
+  PKG_NAME_AND_VERSION: openjdk-24_24.0.1+9
+
+jobs:
+  build:
+    name: Build Debian Package
+    runs-on: ubuntu-22.04 #jammy
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install build-essential pandoc debhelper devscripts dput
+      - name: Download OpenJDK tarball
+        run: >
+          curl
+          -L ${{ env.JDK_TARBALL_URL }}
+          -o ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz
+      - name: Unzip tarball
+        run: |
+          mkdir ${{ env.PKG_NAME_AND_VERSION }};
+          tar -xzf ${{ env.PKG_NAME_AND_VERSION }}.orig.tar.gz -C ${{ env.PKG_NAME_AND_VERSION }} --strip-components 1
+      - name: Copy debian package resources
+        run: cp -R openjdk-${{ env.JDK_MAJOR_VERSION }}/debian ${{ env.PKG_NAME_AND_VERSION }}
+      - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
+        run: |
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
+      - name: Build package
+        run: |
+          (sleep 8m; gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign README.md) &
+          debuild -S -sa -d
+        working-directory: ${{ env.PKG_NAME_AND_VERSION }}
+        env:
+          DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
+          DEBSIGN_KEYID: 615D449FE6E6A235
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deb-package
+          path: |
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*.dsc
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*.debian.tar.xz
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.buildinfo
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.changes
+      - name: Publish on PPA
+        if: inputs.dput
+        run: dput ppa:coffeelibs/openjdk openjdk-${{env.JDK_MAJOR_VERSION}}_*_source.changes

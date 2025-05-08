@@ -11,6 +11,8 @@ curl -L ${JDK_TARBALL_URL} -o ${PKG_NAME_AND_VERSION}.orig.tar.gz
 
 cat << EOF
 Did you installed the following packages?
+* build-essential
+* pandoc
 * devscripts
 * debhelper
 EOF
@@ -34,7 +36,7 @@ if [ "yes" != ${READY_TO_BUILD} ]; then
     exit 1
 fi
 
-
+rm --recursive --force ${PKG_NAME_AND_VERSION}
 mkdir ${PKG_NAME_AND_VERSION} 
 tar -xzf ./${PKG_NAME_AND_VERSION}.orig.tar.gz -C ${PKG_NAME_AND_VERSION} --strip-components=1
 cp -R openjdk-${JDK_MAJOR_VERSION}/debian ${PKG_NAME_AND_VERSION} 
