@@ -11,6 +11,7 @@ curl -L ${JDK_TARBALL_URL} -o ${PKG_NAME_AND_VERSION}.orig.tar.gz
 
 cat << EOF
 Did you installed the following packages?
+* build-essential
 * devscripts
 * debhelper
 EOF
