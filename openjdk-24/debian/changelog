@@ -1,5 +1,12 @@
+openjdk-24 (24.0.1+9-0ppa2) jammy; urgency=low
+
+  * fixed build dependencies
+  * see https://jdk.java.net/24/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Fri, 09 May 2025 15:00:00 +0200
+
 openjdk-24 (24.0.1+9-0ppa1) jammy; urgency=low
 
   * see https://jdk.java.net/24/release-notes
 
- -- Cryptobot <releases@cryptomator.org>  Mon, 08 May 2025 17:00:00 +0200
+ -- Cryptobot <releases@cryptomator.org>  Tue, 08 May 2025 17:00:00 +0200
