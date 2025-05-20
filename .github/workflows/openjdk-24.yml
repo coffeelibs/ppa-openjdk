@@ -3,6 +3,11 @@ name: Build OpenJDK-24
 on:
   workflow_dispatch:
     inputs:
+      provide-jdk:
+        description: 'Upload to Artifacts'
+        required: false
+        default: false
+        type: boolean
       dput:
         description: 'Upload to PPA'
         required: true
@@ -55,12 +60,23 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: deb-package
+          name: reduced-deb-package
           path: |
             openjdk-${{ env.JDK_MAJOR_VERSION }}_*.dsc
             openjdk-${{ env.JDK_MAJOR_VERSION }}_*.debian.tar.xz
             openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.buildinfo
             openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.changes
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: inputs.provide-jdk
+        with:
+          name: full-deb-package
+          path: |
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*.dsc
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*.debian.tar.xz
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.buildinfo
+            openjdk-${{ env.JDK_MAJOR_VERSION }}_*_source.changes
+            coffeelibs-jdk-${{ env.JDK_MAJOR_VERSION }}_*.deb
       - name: Publish on PPA
         if: inputs.dput
         run: dput ppa:coffeelibs/openjdk openjdk-${{env.JDK_MAJOR_VERSION}}_*_source.changes
