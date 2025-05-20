@@ -21,7 +21,7 @@ override_dh_auto_configure:
 	--with-version-string=$(JDK_VERSION) \
 	--with-version-opt=coffeelibs \
 	--with-native-debug-symbols=none \
-	--enable-linkable-runtime
+	--with-source-date=current
 
 override_dh_auto_build:
 	make jdk-image
