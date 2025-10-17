@@ -1,0 +1,5 @@
+openjdk-25 (25.0.0+36-0ppa1) jammy; urgency=low
+
+  * see https://jdk.java.net/25/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Fri, 17 Oct 2025 12:00:00 +0200
