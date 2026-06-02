@@ -1,0 +1,5 @@
+openjdk-26 (26.0.1+8-0ppa1) jammy; urgency=low
+
+  * see https://jdk.java.net/26/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Mon, 01 Jun 2026 17:34:49 +0200

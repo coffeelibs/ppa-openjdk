@@ -1,0 +1,11 @@
+cache/*
+!cache/.gitkeep
+
+*.deb
+*.ddeb
+*.build
+*.buildinfo
+*.changes
+*.orig.tar.gz
+
+openjdk-[0-9]*_*/
