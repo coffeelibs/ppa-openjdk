@@ -13,14 +13,18 @@ env:
   JDK_TARBALL_URL: https://github.com/openjdk/jdk/archive/refs/tags/jdk-20+36.tar.gz
   PKG_NAME_AND_VERSION: openjdk-20_20+36
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build Debian Package
     runs-on: ubuntu-20.04 #focal
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Install build tools
         run: |
           sudo apt-get update
@@ -50,7 +54,7 @@ jobs:
           DEBSIGN_PROGRAM: gpg --batch --pinentry-mode loopback
           DEBSIGN_KEYID: 615D449FE6E6A235
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: deb-package
           path: |
