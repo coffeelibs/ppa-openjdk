@@ -1,0 +1,5 @@
+openjdk-27 (27.0.1.0.3+1-0ppa1) jammy; urgency=low
+
+  * see https://jdk.java.net/27/release-notes
+
+ -- Cryptobot <releases@cryptomator.org>  Wed, 04 Nov 2026 17:44:15 +0100
