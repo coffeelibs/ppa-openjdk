@@ -6,6 +6,17 @@
 
 BOOT_JDK_PATH = /usr/lib/jvm/java-26-coffeelibs
 JDK_VERSION = 27.0.1.0.3+1
+VENDOR_URL = https://github.com/coffeelibs/ppa-openjdk
+VENDOR_BUG_URL = https://github.com/coffeelibs/ppa-openjdk/issues
+
+# configure ignores CFLAGS from dpkg-buildflags, so pass the stronger stack protector explicitly (appended after the JDK's own -fstack-protector)
+HARDENING_FLAGS = -fstack-protector-strong
+
+# PAC/BTI is only available on aarch64; configure fails if requested on other architectures
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+ifeq ($(DEB_HOST_ARCH),arm64)
+ARCH_CONFIGURE_FLAGS = --enable-branch-protection
+endif
 
 %:
 	dh $@
@@ -13,6 +24,7 @@ JDK_VERSION = 27.0.1.0.3+1
 override_dh_auto_clean:
 	if [ -d build ]; then make dist-clean; rm -r build; fi
 
+# no --with-source-date: configure falls back to SOURCE_DATE_EPOCH, which dpkg-buildpackage derives from debian/changelog
 override_dh_auto_configure:
 	bash configure \
 	--with-conf-name=coffeelibs-openjdk-27 \
@@ -21,7 +33,13 @@ override_dh_auto_configure:
 	--with-version-string=$(JDK_VERSION) \
 	--with-version-opt=coffeelibs \
 	--with-native-debug-symbols=none \
-	--with-source-date=current
+	--with-vendor-name=coffeelibs \
+	--with-vendor-url=$(VENDOR_URL) \
+	--with-vendor-bug-url=$(VENDOR_BUG_URL) \
+	--with-vendor-vm-bug-url=$(VENDOR_BUG_URL) \
+	--with-extra-cflags="$(HARDENING_FLAGS)" \
+	--with-extra-cxxflags="$(HARDENING_FLAGS)" \
+	$(ARCH_CONFIGURE_FLAGS)
 
 override_dh_auto_build:
 	make jdk-image
